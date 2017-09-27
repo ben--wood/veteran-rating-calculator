@@ -1,0 +1,43 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <h2>
+            A simple API that returns a cumulative and estimated disability rating value according to the <a target="_blank" href="https://www.benefits.va.gov/compensation/rates-index.asp">Benefit Rates from the U.S. Department of Veterans Affairs website</a>.
+        </h2>
+
+        <br />
+        <p>
+            Do a GET or a POST to:<br />
+            <a href="https://veteranratingcalculator.azurewebsites.net/api/calculate">https://veteranratingcalculator.azurewebsites.net/api/calculate</a>
+        </p>
+
+        <br />
+        <p>
+            <strong>GET</strong><br />
+            Send comma or pipe separated rating values in the request:<br />            
+            /api/calculate/40,20,60
+        </p>
+
+        <br />
+        <p>
+            <strong>POST</strong><br />
+            Send an array of integer rating values in the post body:<br />
+            /api/calculate<br />
+            Body: [40,20,60]
+        </p>
+
+        <br />
+        <p>
+            <strong>RETURNS</strong><br />
+            The API will return a JSON object that looks like this:<br />            
+            {"cumulativeDisabilityRating":81,"estimatedDisabilityRating":80}
+        </p>
+        
+        <br />
+        <p>
+            <strong>HELP</strong><br />
+            <a href="mailto:benmwood@hotmail.com">Email</a>
+        </p>
+
+
+    </div>
+</div>
