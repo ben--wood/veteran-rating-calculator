@@ -1,14 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using VeteranDisabilityRatingCalculator.Models;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace VeteranDisabilityRatingCalculator.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Calculate")]
-    public class CalculateController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CalculateController : ControllerBase
     {
         /// <summary>
         /// Send a comma or pipe separated string of disability rating values, eg: 20,60,40 
@@ -25,23 +27,12 @@ namespace VeteranDisabilityRatingCalculator.Controllers
         {
             if (String.IsNullOrWhiteSpace(ratings))
             {
-                return BadRequest();
+                return BadRequest("You must supply at least one rating value");
             }
 
             string[] separatingChars = { ",", "|" };
-            string[] ratingsArray = ratings.Split(separatingChars, StringSplitOptions.RemoveEmptyEntries);
-            var ratingsList = new List<int>();
-
-            for (int i = 0; i < ratingsArray.Length; i++)
-            {
-                int rating;
-                if (int.TryParse(ratingsArray[i], out rating))
-                {
-                    ratingsList.Add(rating);
-                }
-            }
-
-            return Ok(Calculate(ratingsList));
+            int[] ratingsArray = Array.ConvertAll(ratings.Split(separatingChars, StringSplitOptions.RemoveEmptyEntries), s => int.Parse(s));
+            return Calculate(ratingsArray);
         }
 
         /// <summary>
@@ -54,14 +45,9 @@ namespace VeteranDisabilityRatingCalculator.Controllers
         /// <returns>{"cumulativeDisabilityRating":n,"estimatedDisabilityRating":n}</returns>
         // POST api/calculate
         [HttpPost]
-        public IActionResult Post([FromBody]int[] ratings)
+        public IActionResult Post([FromBody] int[] ratings)
         {
-            if (ratings != null && ratings.Length > 0)
-            {
-                return Ok(Calculate(ratings.ToList()));
-            }
-
-            return BadRequest();
+            return Calculate(ratings);
         }
 
         /// <summary>
@@ -69,33 +55,34 @@ namespace VeteranDisabilityRatingCalculator.Controllers
         /// </summary>
         /// <param name="ratings"></param>
         /// <returns></returns>
-        private CalculationResult Calculate(List<int> ratings)
+        private IActionResult Calculate(int[] ratings)
         {
-            var calculationResult = new CalculationResult();
+            CalculationResult calculationResult = new CalculationResult();
 
             try
             {
-                if (ratings != null && ratings.Count > 0)
+                if (ratings != null && ratings.Count() > 0)
                 {
-                    // ratings need to be ordered from largest to smallest
-                    ratings = ratings.OrderByDescending(x => x).ToList();
+                    // order ratings from largest to smallest
+                    Array.Sort(ratings);
+                    Array.Reverse(ratings);
 
                     // skip the highest rating
-                    var cumulativeDisabilityRating = ratings.First();
-                    for (int i = 1; i < ratings.Count; i++)
+                    int cumulativeDisabilityRating = ratings.First();
+                    for (int i = 1; i < ratings.Count(); i++)
                     {
-                        var r = ratings[i];
+                        int r = ratings[i];
 
-                        var previousCumulativeDisabilityRating = cumulativeDisabilityRating;
+                        int previousCumulativeDisabilityRating = cumulativeDisabilityRating;
 
-                        var rating = ((decimal)r) / 100;
-                        var disabilityCalculation = (decimal)(
-                            (rating * (100 - previousCumulativeDisabilityRating)) + previousCumulativeDisabilityRating
-                        );
+                        // rating as a percentage
+                        decimal rating = ((decimal)r) / 100;
+
+                        // disability ratings are not additive - calculation according to https://www.benefits.va.gov/compensation/rates-index.asp#combinedRatingsTable1
+                        decimal disabilityCalculation = (decimal)((rating * (100 - previousCumulativeDisabilityRating)) + previousCumulativeDisabilityRating);
 
                         // round to the nearest integer
                         cumulativeDisabilityRating = (int)Math.Round(disabilityCalculation, 0, MidpointRounding.AwayFromZero);
-
 
                         if (cumulativeDisabilityRating >= 100)
                         {
@@ -110,19 +97,29 @@ namespace VeteranDisabilityRatingCalculator.Controllers
 
                     calculationResult.CumulativeDisabilityRating = cumulativeDisabilityRating;
 
-                    // Estimated Disability Rating is rounded to the nearest 10
-                    var remainder = calculationResult.CumulativeDisabilityRating % 10;
-                    calculationResult.EstimatedDisabilityRating = remainder >= 5 ?
-                        (calculationResult.CumulativeDisabilityRating - remainder + 10) :
-                        (calculationResult.CumulativeDisabilityRating - remainder);
+                    // the Estimated Disability Rating is rounded to the nearest 10
+                    int remainder = calculationResult.CumulativeDisabilityRating % 10;
+                    if (remainder >= 5)
+                    {
+                        calculationResult.EstimatedDisabilityRating = calculationResult.CumulativeDisabilityRating - remainder + 10;
+                    }
+                    else
+                    {
+                        calculationResult.EstimatedDisabilityRating = calculationResult.CumulativeDisabilityRating - remainder;
+                    }
+                }
+                else
+                {
+                    return BadRequest("You must supply at least one rating value");
                 }
             }
             catch (Exception ex)
             {
                 // TODO: log exception
+                return BadRequest(String.Concat("There was an error calculating your rating. ", ex.Message));
             }
 
-            return calculationResult;
+            return Ok(calculationResult);
         }
     }
 }

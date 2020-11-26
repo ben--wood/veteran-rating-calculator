@@ -1,44 +1,63 @@
-﻿<div class="row">
-    <div class="col-xs-12">
-        <h2>
-            A simple API that returns a cumulative and estimated disability rating value according to the <a target="_blank" href="https://www.benefits.va.gov/compensation/rates-index.asp">Benefit Rates from the U.S. Department of Veterans Affairs website</a>.
-        </h2>
+﻿@{
+    ViewData["Title"] = "US Veteran Affairs Compensation - Benefit Rates API";
+}
 
-        <br />
-        <p>
+<main role="main" class="inner cover text-center">
+    <img src="~/img/us-department-of-veterans-affairs-logo.png" />
+    <h1 class="cover-heading">US Veteran Affairs Compensation - Benefit Rates API</h1>
+    <p class="lead">
+        A simple API that returns a cumulative and estimated disability rating value according to the
+        <a target="_blank" href="https://www.benefits.va.gov/compensation/rates-index.asp">
+            Benefit Rates from the U.S. Department of Veterans Affairs website
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up-right-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                <path fill-rule="evenodd" d="M5.172 10.828a.5.5 0 0 0 .707 0l4.096-4.096V9.5a.5.5 0 1 0 1 0V5.525a.5.5 0 0 0-.5-.5H6.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z" />
+            </svg>
+        </a>.
+    </p>
+</main>
+
+<div class="container">    
+    <div class="row">
+
+        <div class="container p-3">
+            <h2>Usage</h2>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="container p-3">
             Do a GET or a POST to:<br />
-            <a href="https://veteranratingcalculator.azurewebsites.net/api/calculate">https://veteranratingcalculator.azurewebsites.net/api/calculate</a>
-        </p>
-
-        <br />
-        <p>
+            <a href="@Url.RouteUrl("defaultapi", new { httproute = "", controller = "Calculate", ratings = "40,60,20" })">/api/calculate</a>
+        </div>
+        <div class="clearfix"></div>
+        <div class="container p-3">
             <strong>GET</strong><br />
-            Send comma or pipe separated rating values in the request:<br />            
-            /api/calculate/40,20,60
-        </p>
-
-        <br />
-        <p>
+            Send comma or pipe separated rating values in the request:<br />
+            <a href="@Url.RouteUrl("defaultapi", new { httproute = "", controller = "Calculate", ratings = "40,60,20" })">/api/calculate/40,60,20</a>            
+        </div>
+        <div class="clearfix"></div>
+        <div class="container p-3">
             <strong>POST</strong><br />
             Send an array of integer rating values in the post body:<br />
             /api/calculate<br />
             Body: [40,20,60]
-        </p>
-
-        <br />
-        <p>
+        </div>
+        <div class="clearfix"></div>
+        <div class="container p-3">
             <strong>RETURNS</strong><br />
-            The API will return a JSON object that looks like this:<br />            
-            {"cumulativeDisabilityRating":81,"estimatedDisabilityRating":80}
-        </p>
-        
-        <br />
-        <p>
-            <strong>HELP</strong><br />
-            <a href="https://github.com/ben--wood/veteran-rating-calculator">Code is in Github</a><br />
-            <a href="mailto:benmwood@hotmail.com">Email</a>
-        </p>
+            The API will return a JSON object that looks like this:<br />
+            <pre><code> 
+            {
+                "cumulativeDisabilityRating":81,
+                "estimatedDisabilityRating":80
+            }
+            </code></pre>
+        </div>
 
+        <div class="clearfix"></div>
+        <div class="container p-3">
+            <a href="https://github.com/ben--wood/veteran-rating-calculator" target="_blank">Github</a>
+        </div>
 
     </div>
 </div>
