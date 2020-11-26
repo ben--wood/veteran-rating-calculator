@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VeteranDisabilityCalculator.Core\VeteranDisabilityCalculator.Core.csproj" />
+    <ProjectReference Include="..\VeteranDisabilityCalculator.Core\VeteranDisabilityRatingCalculator.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

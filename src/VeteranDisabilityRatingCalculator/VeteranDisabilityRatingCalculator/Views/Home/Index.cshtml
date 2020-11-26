@@ -3,7 +3,6 @@
 }
 
 <main role="main" class="inner cover text-center">
-    <img src="~/img/us-department-of-veterans-affairs-logo.png" />
     <h1 class="cover-heading">US Veteran Affairs Compensation - Benefit Rates API</h1>
     <p class="lead">
         A simple API that returns a cumulative and estimated disability rating value according to the
@@ -26,8 +25,8 @@
 
         <div class="clearfix"></div>
         <div class="container p-3">
-            Do a GET or a POST to:<br />
-            <a href="@Url.RouteUrl("defaultapi", new { httproute = "", controller = "Calculate", ratings = "40,60,20" })">/api/calculate</a>
+            Send a GET or a POST to:<br />
+            <a href="@Url.RouteUrl("defaultapi", new { httproute = "", controller = "Calculate", ratings = "40,60,20" })">https://vadisabilityratingcalculator.azurewebsites.net/api/calculate</a>
         </div>
         <div class="clearfix"></div>
         <div class="container p-3">
@@ -60,4 +59,8 @@
         </div>
 
     </div>
+</div>
+
+<div class="inner cover text-center">
+    <img src="~/img/us-department-of-veterans-affairs-logo.png" />
 </div>

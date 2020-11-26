@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeteranDisabilityRatingCalculator", "VeteranDisabilityRatingCalculator\VeteranDisabilityRatingCalculator.csproj", "{B5D7D6B4-06FA-4B5B-B7C5-E40B12DE4C75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeteranDisabilityRatingCalculator.Web", "VeteranDisabilityRatingCalculator\VeteranDisabilityRatingCalculator.Web.csproj", "{B5D7D6B4-06FA-4B5B-B7C5-E40B12DE4C75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeteranDisabilityRatingCalculator.Tests", "VeteranDisabilityRatingCalculator.Tests\VeteranDisabilityRatingCalculator.Tests.csproj", "{0AD5B7A5-9B3E-4DC6-B577-9DB4FA43DACD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeteranDisabilityRatingCalculator.Tests", "VeteranDisabilityRatingCalculator.Tests\VeteranDisabilityRatingCalculator.Tests.csproj", "{0AD5B7A5-9B3E-4DC6-B577-9DB4FA43DACD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeteranDisabilityCalculator.Core", "VeteranDisabilityCalculator.Core\VeteranDisabilityCalculator.Core.csproj", "{087B6119-6F6D-4238-AD20-C6FE387C823A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeteranDisabilityRatingCalculator.Core", "VeteranDisabilityCalculator.Core\VeteranDisabilityRatingCalculator.Core.csproj", "{087B6119-6F6D-4238-AD20-C6FE387C823A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using VeteranDisabilityCalculator.Core.Services;
+using VeteranDisabilityRatingCalculator.Core.Services;
 
 namespace VeteranDisabilityRatingCalculator.Controllers
 {
@@ -57,7 +57,7 @@ namespace VeteranDisabilityRatingCalculator.Controllers
         {       
             var calculationResult = _calculationService.Calculate(ratings);
 
-            if (!String.IsNullOrWhiteSpace(calculationResult.ErrorMessage))
+            if (calculationResult.CalculationSuccess == false)
             {
                 return BadRequest(String.Concat("There was an error calculating your rating. ", calculationResult.ErrorMessage));
             }   
