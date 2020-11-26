@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VeteranDisabilityCalculator.Core\VeteranDisabilityCalculator.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="wwwroot\img\us-department-of-veterans-affairs-logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
